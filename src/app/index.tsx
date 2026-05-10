@@ -1,98 +1,181 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import { Image, Pressable, ScrollView, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+const index = () => {
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <ScrollView>
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle={'dark-content'} />
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
+        {/* HEADER */}
+        <View style={styles.children}>
+          <Image
+            source={{
+              uri: 'https://img.freepik.com/premium-vector/medical-logo-vector_284160-1720.jpg',
+            }}
+            style={styles.logo}
           />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
 
-        {Platform.OS === 'web' && <WebBadge />}
+          <Text style={styles.heading}>Sign In</Text>
+
+          <Text style={styles.subHeading}>Let's experience the joy of telecare AI.</Text>
+        </View>
+
+        {/* INPUT SECTION */}
+        <View style={styles.inputParent}>
+          <View>
+            <Text style={styles.label}>Email Address</Text>
+
+            <TextInput style={styles.input} placeholder="Enter your email" placeholderTextColor={'gray'} />
+          </View>
+
+          <View>
+            <Text style={styles.label}>Password</Text>
+
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your password"
+              placeholderTextColor={'gray'}
+              secureTextEntry
+            />
+          </View>
+
+          {/* BUTTON */}
+          <View style={styles.buttonContainer}>
+            <Pressable style={styles.button}>
+              <Text style={styles.buttonText}>Sign In</Text>
+            </Pressable>
+          </View>
+        </View>
+
+        {/* SOCIAL SECTION */}
+        <View style={styles.social}>
+          <Pressable style={styles.socialBox}>
+            <Image
+              style={styles.socialIcon}
+              source={{
+                uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXuJOZzykgBcnzCUFo-Yc7lJZkLnRWAAPmbw&s',
+              }}
+            />
+          </Pressable>
+
+          <Pressable style={styles.socialBox}>
+            <Image
+              style={styles.socialIcon}
+              source={{
+                uri: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-black-icon.png',
+              }}
+            />
+          </Pressable>
+
+          <Pressable style={styles.socialBox}>
+            <Image
+              style={styles.socialIcon}
+              source={{
+                uri: 'https://www.iconpacks.net/icons/2/free-instagram-logo-icon-3497-thumb.png',
+              }}
+            />
+          </Pressable>
+        </View>
+
+        {/* Account Creation */}
       </SafeAreaView>
-    </ThemedView>
+    </ScrollView>
   );
-}
+};
+
+export default index;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f5f5f5',
+    padding: 16,
+  },
+
+  children: {
     justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+    marginBottom: 40,
+  },
+
+  logo: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    marginBottom: 12,
+  },
+
+  heading: {
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+
+  subHeading: {
+    color: 'gray',
+    marginTop: 4,
+  },
+
+  inputParent: {
+    gap: 20,
+  },
+
+  label: {
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+
+  input: {
+    width: '100%',
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 15,
+    elevation: 2,
+  },
+
+  buttonContainer: {
+    alignItems: 'center',
+    marginTop: 10,
+  },
+
+  button: {
+    width: '100%',
+    backgroundColor: 'rgba(98, 163, 14, 0.9)',
+    padding: 16,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+
+  social: {
     flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+    alignItems: 'center',
+    gap: 16,
+    marginTop: 40,
   },
-  title: {
-    textAlign: 'center',
+
+  socialBox: {
+    width: 60,
+    height: 60,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 4,
   },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+
+  socialIcon: {
+    width: 28,
+    height: 28,
+    resizeMode: 'contain',
   },
 });
