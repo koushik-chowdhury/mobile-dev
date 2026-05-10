@@ -80,6 +80,14 @@ const index = () => {
         </View>
 
         {/* Account Creation */}
+
+        <View style={styles.children}>
+          <Text>
+            Dont't have an account ? <Text style={{ color: 'green', fontWeight: 'bold' }}>Sign Up.</Text>
+          </Text>
+          <Text style={{ color: 'green', fontWeight: 'bold' }}>Forgot your passowrd?</Text>
+        </View>
+
       </SafeAreaView>
     </ScrollView>
   );
